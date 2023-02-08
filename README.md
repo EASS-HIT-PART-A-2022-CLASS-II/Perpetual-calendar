@@ -1,4 +1,7 @@
-# Personal-calendar - a calendar without years!
+# Personal-calendar - Make events you Don't forget!
 
-* Personal-calendar is a calendar valid for many years, usually designed to look up the day of the week for a given date in the past or future.
-* The purpose of the application is to give you one calendar without years so that you can add important dates that repeat themselves every year (such as: wedding anniversary, birthdays, etc.)
+* The Personal calendar is a event saving.
+* The purpose of the application is to give the user the option to save events and display them.
+* The app includes two containers:
+1. Backend: written with python using pydentic and Fast API. the port that the backend runs with is: 8080.
+2. Frontend: written with Python using Streamlit (a UI library). the port that the frontend runs with is: 8501.
