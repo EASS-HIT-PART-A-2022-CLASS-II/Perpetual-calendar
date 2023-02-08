@@ -1,3 +1,4 @@
+import pandas as pd
 import streamlit as st
 import requests
 import datetime
@@ -18,15 +19,26 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Create a function to create an event
+
 def create_event(event):
     r = requests.post("http://backend:8080/events/", json=event)
     return r.json()
 
-# Create a function to show all events
+
 def show_all_events():
     r = requests.get("http://backend:8080/show-events/")
     return r.json()
+
+
+def update_event(event_id, event):
+    r = requests.put(f"http://backend:8080/update/{event_id}", json=event)
+    return r.json()
+
+
+def delete_event(event_id):
+    r = requests.delete(f"http://backend:8080/delete/{event_id}")
+    return r.json()
+
 
 def main():
     st.sidebar.title("Personal Calendar")
@@ -39,14 +51,22 @@ def main():
         start_time = st.date_input("Event Start Time").isoformat()
         end_time = st.date_input("Event End Time").isoformat()
         if st.button("Save Event"):
-            event = {"title": title, "description": description, "start_time": start_time, "end_time": end_time}
+            event = {"title": title, "description": description,
+                     "start_time": start_time, "end_time": end_time}
             result = create_event(event)
             st.success(result["message"])
     else:
         st.title("Show Events")
         events = show_all_events()
-        st.write("All events:")
-        st.write(events)
+        events_data = events.get("events", [])
+        if events_data:
+            st.write("All events:")
+            events_df = pd.DataFrame(events_data)
+            st.write(
+                events_df[['title', 'description', 'start_time', 'end_time']])
+        else:
+            st.write("No events found.")
+
 
 if __name__ == "__main__":
     main()
