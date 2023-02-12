@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
 import requests
-import datetime
 st.set_page_config(page_title="Personal Calendar",
                    page_icon=":calendar:", layout="wide")
 
@@ -11,7 +10,7 @@ st.markdown(
         <h1 style='color: #4169E1; text-align: center; font-size: 50px; font-weight: bold; text-shadow: 2px 2px 4px #000000;'>
         Personal Calendar
         </h1>
-        <h2 style='color: #4169E2; text-align: center; font-size: 30px; text-shadow: 2px 2px 4px #000000;'>
+        <h2 style='color: #4169E2; text-align: center; font-size: 30px;'>
         Create and manage your events
         </h2>
     </body>
@@ -20,53 +19,78 @@ st.markdown(
 )
 
 
+def show_events():
+    try:
+        response = requests.get("http://backend:8080/show_events/").json()
+        return response
+    except:
+        return {"error": "Error retrieving events"}
+
+
 def create_event(event):
-    r = requests.post("http://backend:8080/events/", json=event)
-    return r.json()
+    try:
+        response = requests.post(
+            "http://backend:8080/create_event/", json=event).json()
+        return response
+    except:
+        return {"error": "Error creating event!"}
 
 
-def show_all_events():
-    r = requests.get("http://backend:8080/show-events/")
-    return r.json()
+def update_event(id, event):
+    try:
+        response = requests.put(
+            f"http://backend:8080/update_event?id={id}", json=event).json()
+        return response
+    except:
+        return {"error": "Error updating event"}
 
 
-def update_event(event_id, event):
-    r = requests.put(f"http://backend:8080/update/{event_id}", json=event)
-    return r.json()
+def delete_event(id):
+    try:
+        response = requests.delete(
+            f"http://backend:8080/delete_event?id={id}").json()
+        return response
+    except:
+        return {"error": "Error deleting event"}
 
 
-def delete_event(event_id):
-    r = requests.delete(f"http://backend:8080/delete/{event_id}")
-    return r.json()
+mode = st.sidebar.radio("Choose an option", ["Create Event", "Show Events"])
 
+if mode == "Create Event":
+    st.header("Create a New Event")
+    title = st.text_input("Title", key='title')
+    e_description = st.text_input("Description", key='e_description')
+    e_start_date = st.date_input("Start Date").isoformat()
+    e_end_date = st.date_input("End Date").isoformat()
+    if st.button("Save Event"):
+        event = {"title": title, "e_description": e_description,
+                 "e_start_date": e_start_date, "e_end_date": e_end_date}
+        result = create_event(event)
+        st.write(result)
 
-def main():
-    st.sidebar.title("Personal Calendar")
-    page = st.sidebar.selectbox("Select a page", ["Add Event", "Show Events"])
-
-    if page == "Add Event":
-        st.title("Add Event")
-        title = st.text_input("Title", key='title')
-        description = st.text_input("Description", key='description')
-        start_time = st.date_input("Event Start Time").isoformat()
-        end_time = st.date_input("Event End Time").isoformat()
-        if st.button("Save Event"):
-            event = {"title": title, "description": description,
-                     "start_time": start_time, "end_time": end_time}
-            result = create_event(event)
-            st.success(result["message"])
+if mode == "Show Events":
+    st.header("All Events")
+    events = show_events()
+    if "error" in events:
+        st.write(events["error"])
     else:
-        st.title("Show Events")
-        events = show_all_events()
-        events_data = events.get("events", [])
-        if events_data:
-            st.write("All events:")
-            events_df = pd.DataFrame(events_data)
-            st.write(
-                events_df[['title', 'description', 'start_time', 'end_time']])
-        else:
-            st.write("No events found.")
+        for event in events:
+            st.write(event)
+            # event_id = events['id']
+            # if st.button(f"Update Event {event_id}"):
+            #     title = st.text_input("title", event['title'])
+            #     description = st.text_input(
+            #         "Description", event['description'])
+            #     start_date = st.date_input("Start Date", event['start_date'])
+            #     end_date = st.date_input("End Date", event['end_date'])
+            #     if st.button("Save Changes"):
+            #         event = {"Title": title, "EventDescription": description,
+            #                  "StartDate": start_date, "EndDate": end_date}
+            #         result = update_event(event_id, event)
+            #         st.write(result)
+            #         if st.button(f"Delete Event {event_id}"):
+            #             result = delete_event(event_id)
+            #             st.write(result)
 
-
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

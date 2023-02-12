@@ -3,6 +3,6 @@ from pydantic import BaseModel
 
 class Event(BaseModel):
     title: str
-    description: str
-    start_time: str
-    end_time: str
+    e_description: str
+    e_start_date: str
+    e_end_date: str

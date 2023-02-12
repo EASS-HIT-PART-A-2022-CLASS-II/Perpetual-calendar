@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile
     ports: 
       - "8080:8080"
+    depends_on:
+      - mysql
 
   frontend:
     container_name: frontend
@@ -15,3 +17,17 @@ services:
       dockerfile: Dockerfile
     ports: 
       - "8501:8501"
+    depends_on:
+      - backend
+
+  mysql:
+    container_name: mysql
+    build:
+      context: ./mysql/
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db

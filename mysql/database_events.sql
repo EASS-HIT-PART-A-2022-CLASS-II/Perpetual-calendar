@@ -1,0 +1,12 @@
+CREATE DATABASE IF NOT EXISTS db;
+use db;
+
+DROP TABLE IF EXISTS events;
+
+CREATE TABLE events (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) TEXT NOT NULL,
+    e_description VARCHAR(255) TEXT NOT NULL,
+    e_start_date DATE NOT NULL,
+    e_end_date DATE NOT NULL
+);
