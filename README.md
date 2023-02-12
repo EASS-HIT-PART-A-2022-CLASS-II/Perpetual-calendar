@@ -15,3 +15,7 @@
 4. Visual Diagram:
 
 ![image](https://user-images.githubusercontent.com/58915223/218325547-b0471aa7-ef93-4944-94e2-451e10ca0eb4.png)
+
+5. Short video about the app
+
+[33ee20ce-cae2-48a3-b402-dd7fea4adafa.webm](https://user-images.githubusercontent.com/58915223/218334770-1ef547ce-d1c4-4a5e-8846-9175a620c319.webm)
