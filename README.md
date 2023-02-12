@@ -10,3 +10,4 @@
 2. Frontend: written with Python using Streamlit (a UI library). the port that the frontend runs with is: 8501.
 
 
+![image](https://user-images.githubusercontent.com/58915223/218325509-b469374c-2fb4-4bb8-9208-3d3066d7d4fa.png)
