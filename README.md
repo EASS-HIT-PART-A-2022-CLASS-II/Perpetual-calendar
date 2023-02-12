@@ -12,7 +12,8 @@
 
 3. DataBase - I use MySQL for the Database, the DB in runnig on port 3306
 
-4. Visual Diagram
+4. Visual Diagram:
+
 ![image](https://user-images.githubusercontent.com/58915223/218325547-b0471aa7-ef93-4944-94e2-451e10ca0eb4.png)
 
 5. The app runnig by Docker-compose:
