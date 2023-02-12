@@ -8,5 +8,10 @@
 ![image](https://user-images.githubusercontent.com/58915223/217578761-b2e2e545-03c3-40aa-9290-0af182d7f0ec.png)
 
 2. Frontend: written with Python using Streamlit (a UI library). the port that the frontend runs with is: 8501.
+![image](https://user-images.githubusercontent.com/58915223/218325610-dd54befc-ce85-40d7-8fc3-3584bde29cef.png)
 
+3. DataBase - I use MySQL for the Database, the DB in runnig on port 3306
 
+4. Visual Diagram:
+
+![image](https://user-images.githubusercontent.com/58915223/218325547-b0471aa7-ef93-4944-94e2-451e10ca0eb4.png)
